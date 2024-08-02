@@ -1992,6 +1992,12 @@ func (c *Client) receiveData(i int) {
 				panic(err)
 			}
 		}
+               currentFileInfo := c.FilesToTransfer[c.FilesToTransferCurrentNum];
+               err = os.Chtimes(c.CurrentFile.Name(), currentFileInfo.ModTime, currentFileInfo.ModTime)
+               if err != nil {
+                       log.Errorf("Failed to set original modification date time.")
+               }
+
 		c.mutex.Unlock()
 	}
 }
